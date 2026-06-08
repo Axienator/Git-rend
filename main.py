@@ -23,19 +23,25 @@ def git_trend():
     match user_choice:
         case "day" | "week" | "month" | "year":
             time_filter = duration[user_choice]
-            print(f"Fetching data for the last {user_choice}...")
+            print(f"Fetching data for the last {user_choice}...\n")
         case _:
             print("Error: Invalid time duration. Please choose 'day', 'week', 'month', or 'year'.")
             return
 
-    url = f"{main_url}{time_filter}"
+    url = f"{main_url}{time_filter}&per_page={repo_limit}"
     response = requests.get(url)
     
     if response.status_code == 200:
         data = response.json()
-        print(data)  
     else:
         print("Error: Request failed with status code:", response.status_code)
+
+    if data:
+        for repo in data['items']:
+            print(f"Repository Name: {repo['name']}")
+            print(f"Stars: {repo['stargazers_count']}")
+            print(f"URL: {repo['html_url']}")
+            print("-" * 40)
         
 git_trend()    
 
