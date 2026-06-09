@@ -1,8 +1,9 @@
 import requests
+from datetime import datetime, timedelta
 import sys
 
 
-main_url = "https://api.github.com/search/repositories?q=language:python&sort=stars"
+main_url = "https://api.github.com/search/repositories"
 
 def git_trend():
 
