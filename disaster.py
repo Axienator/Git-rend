@@ -1,13 +1,20 @@
 import requests
+import sys
 
-response = requests.get(
-  'https://api.terraquakeapi.com/v1/earthquakes/today',
-  params={'limit': 10}
-)
-data = response.json()
-print(f"Total earthquakes today: {data['totalEarthquakes']}")
+main_url = 'https://api.terraquakeapi.com/v1/earthquakes/today'
 
-for quake in data['payload']:
-    props = quake['properties']
+def earthquake():
+  response = requests.get(main_url, params={'limit': 10})
+  data = response.json()
+  print(f"Total earthquakes today: {data['totalEarthquakes']}")
 
-    print(f"Time: {props['time']}")
+  quake_limit = int(sys.argv[2])
+
+  for quake in data['payload']:
+      props = quake['properties']
+
+      print(f"Time: {props['time']}")
+      print(f"Magnitue: {props['mag']}")
+      print(f"Location: {props['place']}")
+
+earthquake()
