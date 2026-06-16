@@ -12,8 +12,15 @@ def earthquake() -> None:
 
   if response.status_code == 200:
     data = response.json()
-    print(data)
-  else:
-     print(f"Error:{response.status_code}")
+    for item in data['payload']:
 
-earthquake()
+      result = item['properties']
+
+      print(f"Magnitude: {result['mag']}")
+      print(f"Time: {result['time']}")
+      print("-" * 20)
+  else:
+    print(f"Error:{response.status_code}")
+
+if __name__ == "__main__":
+  earthquake()
